@@ -16,6 +16,9 @@ export interface Brand {
   
   export interface Device {
     id?: number;
+    nome: string;
+    macAddress?: string;
+    descricao?: string;
     modeloId: number;
     localizacaoId: number;
     marcaId: number;

@@ -9,6 +9,13 @@ interface DeviceTableProps {
 }
 
 const DeviceTable: React.FC<DeviceTableProps> = ({ devices, onEdit, onDelete }) => {
+  const formatUrl = (url: string) => {
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      return `http://${url}`;
+    }
+    return url;
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -31,7 +38,11 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, onEdit, onDelete }) 
               <TableCell>{device.localizacaoId}</TableCell>
               <TableCell>{device.ip}</TableCell>
               <TableCell>{device.porta}</TableCell>
-              <TableCell>{device.url}</TableCell>
+              <TableCell>
+                <a href={formatUrl(device?.url!)} target="_blank" rel="noopener noreferrer">
+                  {device.url}
+                </a>
+              </TableCell>
               <TableCell>
                 <Button variant="contained" color="primary" onClick={() => onEdit(device)}>Editar</Button>
                 <Button variant="contained" color="secondary" onClick={() => onDelete(device.id!)}>Deletar</Button>
