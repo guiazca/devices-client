@@ -18,8 +18,10 @@ export const fetchModelsByBrand = async (brandId: number) => {
 };
 
 // Funções para Dispositivos
-export const fetchDevices = async () => {
-  const response = await api.get('/Dispositivos');
+export const fetchDevices = async (page: number, pageSize: number, marcaId?: number, localizacaoId?: number) => {
+  const response = await api.get('/dispositivos', {
+    params: { page, pageSize, marcaId, localizacaoId }
+  });
   return response.data;
 };
 

@@ -1,14 +1,19 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TableFooter, TablePagination } from '@mui/material';
 import { Device } from './types';
 
 interface DeviceTableProps {
   devices: Device[];
+  totalItems: number;
+  page: number;
+  pageSize: number;
+  onPageChange: (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => void;
+  onRowsPerPageChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onEdit: (device: Device) => void;
   onDelete: (id: number) => void;
 }
 
-const DeviceTable: React.FC<DeviceTableProps> = ({ devices, onEdit, onDelete }) => {
+const DeviceTable: React.FC<DeviceTableProps> = ({ devices, totalItems, page, pageSize, onPageChange, onRowsPerPageChange, onEdit, onDelete }) => {
   const formatUrl = (url: string) => {
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
       return `http://${url}`;
@@ -21,8 +26,8 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, onEdit, onDelete }) 
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Modelo</TableCell>
             <TableCell>Marca</TableCell>
+            <TableCell>Modelo</TableCell>
             <TableCell>Localização</TableCell>
             <TableCell>IP</TableCell>
             <TableCell>Porta</TableCell>
@@ -39,7 +44,7 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, onEdit, onDelete }) 
               <TableCell>{device.ip}</TableCell>
               <TableCell>{device.porta}</TableCell>
               <TableCell>
-                <a href={formatUrl(device?.url!)} target="_blank" rel="noopener noreferrer">
+              <a href={formatUrl(device?.url!)} target="_blank" rel="noopener noreferrer">
                   {device.url}
                 </a>
               </TableCell>
@@ -50,6 +55,19 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, onEdit, onDelete }) 
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              colSpan={7}
+              count={totalItems}
+              rowsPerPage={pageSize}
+              page={page - 1}
+              onPageChange={onPageChange}
+              onRowsPerPageChange={onRowsPerPageChange}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
     </TableContainer>
   );
