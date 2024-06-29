@@ -7,21 +7,19 @@ const api = axios.create({
 
 // Funções para Softwares
 export const fetchSoftwares = async () => {
-  const response = await api.get('/softwares');
+  const response = await api.get('/Softwares');
   return response.data;
 };
 
 export const createSoftware = async (software: Software) => {
-  const response = await api.post('/softwares', software);
+  const response = await api.post('/Softwares', software);
   return response.data;
 };
 
-export const updateSoftware = async (software: Software) => {
-  const response = await api.put(`/softwares/${software.id}`, software);
-  return response.data;
+export const updateSoftware = async (id: number, software: Software) => {
+  await api.put(`/Softwares/${id}`, software);
 };
 
 export const deleteSoftware = async (id: number) => {
-  const response = await api.delete(`/softwares/${id}`);
-  return response.data;
+  await api.delete(`/Softwares/${id}`);
 };

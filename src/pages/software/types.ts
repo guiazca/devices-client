@@ -1,8 +1,8 @@
 export interface Software {
-    id?: number;
-    nome: string;
-    DataUltimaAtualizacao: string;
-    ip: string;
-    porta?: number;
-    url?: string;
-  }
+  id: number;
+  nome: string;
+  dataUltimaAtualizacao: string | null;
+  ip: string;
+  porta?: number;
+  url?: string;
+}
