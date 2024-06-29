@@ -14,7 +14,6 @@ const BrandTable: React.FC<BrandTableProps> = ({ brands, onEdit, onDelete }) => 
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
             <TableCell>Nome</TableCell>
             <TableCell>Ações</TableCell>
           </TableRow>
@@ -22,7 +21,6 @@ const BrandTable: React.FC<BrandTableProps> = ({ brands, onEdit, onDelete }) => 
         <TableBody>
           {brands.map((brand) => (
             <TableRow key={brand.id}>
-              <TableCell>{brand.id}</TableCell>
               <TableCell>{brand.nome}</TableCell>
               <TableCell>
                 <Button variant="contained" color="primary" onClick={() => onEdit(brand)}>Editar</Button>

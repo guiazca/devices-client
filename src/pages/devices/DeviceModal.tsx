@@ -22,7 +22,9 @@ const DeviceModal: React.FC<DeviceModalProps> = ({ open, onClose, onSave, device
     url: '', 
     nome: '', 
     macAddress: '', 
-    descricao: '' 
+    descricao: '', 
+    marcaNome: '',
+    modeloNome: ''
   });
   const [brands, setBrands] = useState<Brand[]>([]);
   const [models, setModels] = useState<Model[]>([]);
@@ -49,6 +51,8 @@ const DeviceModal: React.FC<DeviceModalProps> = ({ open, onClose, onSave, device
       }
     } else {
       setFormData({ 
+        marcaNome: '',
+        modeloNome: '',
         modeloId: 0, 
         localizacaoId: 0, 
         marcaId: 0, 
@@ -65,6 +69,10 @@ const DeviceModal: React.FC<DeviceModalProps> = ({ open, onClose, onSave, device
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+
+    if (name === 'ip' || name === 'porta') {
+      updateUrl({ ...formData, [name]: value });
+    }
   };
 
   const handleBrandChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,14 +82,16 @@ const DeviceModal: React.FC<DeviceModalProps> = ({ open, onClose, onSave, device
     setModels(modelsData);
   };
 
-  const handleSave = () => {
-    if (!formData.url) {
-      if (formData.porta) {
-        formData.url = `https://${formData.ip}:${formData.porta}`;
-      } else {
-        formData.url = `https://${formData.ip}`;
-      }
+  const updateUrl = (data: Device) => {
+    if (data.porta) {
+      setFormData({ ...data, url: `https://${data.ip}:${data.porta}` });
+    } else {
+      setFormData({ ...data, url: `https://${data.ip}` });
     }
+  };
+
+  const handleSave = () => {
+    updateUrl(formData); // Ensure URL is updated before saving
     onSave(formData);
     onClose();
   };

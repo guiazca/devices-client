@@ -20,7 +20,10 @@ export interface Brand {
     macAddress?: string;
     descricao?: string;
     modeloId: number;
+    modeloNome: string;
+    marcaNome: string;
     localizacaoId: number;
+    localizacaoNome?: string;
     marcaId: number;
     ip: string;
     porta?: number;

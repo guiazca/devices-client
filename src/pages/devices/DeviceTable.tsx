@@ -21,8 +21,8 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, onEdit, onDelete }) 
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
             <TableCell>Modelo</TableCell>
+            <TableCell>Marca</TableCell>
             <TableCell>Localização</TableCell>
             <TableCell>IP</TableCell>
             <TableCell>Porta</TableCell>
@@ -33,9 +33,9 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, onEdit, onDelete }) 
         <TableBody>
           {devices.map((device) => (
             <TableRow key={device.id}>
-              <TableCell>{device.id}</TableCell>
-              <TableCell>{device.modeloId}</TableCell>
-              <TableCell>{device.localizacaoId}</TableCell>
+              <TableCell>{device.marcaNome}</TableCell>
+              <TableCell>{device.modeloNome}</TableCell>
+              <TableCell>{device.localizacaoNome}</TableCell>
               <TableCell>{device.ip}</TableCell>
               <TableCell>{device.porta}</TableCell>
               <TableCell>

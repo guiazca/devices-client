@@ -14,7 +14,6 @@ const LocationTable: React.FC<LocationTableProps> = ({ locations, onEdit, onDele
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
             <TableCell>Nome</TableCell>
             <TableCell>Ações</TableCell>
           </TableRow>
@@ -22,7 +21,6 @@ const LocationTable: React.FC<LocationTableProps> = ({ locations, onEdit, onDele
         <TableBody>
           {locations.map((location) => (
             <TableRow key={location.id}>
-              <TableCell>{location.id}</TableCell>
               <TableCell>{location.nome}</TableCell>
               <TableCell>
                 <Button variant="contained" color="primary" onClick={() => onEdit(location)}>Editar</Button>

@@ -14,7 +14,6 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories, onEdit, onDel
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
             <TableCell>Nome</TableCell>
             <TableCell>Ações</TableCell>
           </TableRow>
@@ -22,7 +21,6 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories, onEdit, onDel
         <TableBody>
           {categories.map((category) => (
             <TableRow key={category.id}>
-              <TableCell>{category.id}</TableCell>
               <TableCell>{category.nome}</TableCell>
               <TableCell>
                 <Button variant="contained" color="primary" onClick={() => onEdit(category)}>Editar</Button>

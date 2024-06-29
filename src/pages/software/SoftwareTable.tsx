@@ -28,7 +28,7 @@ const SoftwareTable: React.FC<SoftwareTableProps> = ({ softwares, onEdit, onDele
             <TableRow key={software.id}>
               <TableCell>{software.id}</TableCell>
               <TableCell>{software.nome}</TableCell>
-              <TableCell>{software.dataUltimaAtualizacao}</TableCell>
+              <TableCell>{software.DataUltimaAtualizacao}</TableCell>
               <TableCell>{software.ip}</TableCell>
               <TableCell>{software.porta}</TableCell>
               <TableCell>{software.url}</TableCell>

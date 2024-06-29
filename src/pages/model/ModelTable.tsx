@@ -14,7 +14,6 @@ const ModelTable: React.FC<ModelTableProps> = ({ models, onEdit, onDelete }) => 
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
             <TableCell>Nome</TableCell>
             <TableCell>Marca</TableCell>
             <TableCell>Ações</TableCell>
@@ -23,7 +22,6 @@ const ModelTable: React.FC<ModelTableProps> = ({ models, onEdit, onDelete }) => 
         <TableBody>
           {models.map((model) => (
             <TableRow key={model.id}>
-              <TableCell>{model.id}</TableCell>
               <TableCell>{model.nome}</TableCell>
               <TableCell>{model.marcaNome}</TableCell>
               <TableCell>
