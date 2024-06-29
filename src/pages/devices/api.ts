@@ -19,23 +19,23 @@ export const fetchModelsByBrand = async (brandId: number) => {
 
 // Funções para Dispositivos
 export const fetchDevices = async (page: number, pageSize: number, marcaId?: number, localizacaoId?: number) => {
-  const response = await api.get('/dispositivos', {
+  const response = await api.get('/Devices', {
     params: { page, pageSize, marcaId, localizacaoId }
   });
   return response.data;
 };
 
 export const createDevice = async (device: Device) => {
-  const response = await api.post('/Dispositivos', device);
+  const response = await api.post('/Devices', device);
   return response.data;
 };
 
 export const updateDevice = async (device: Device) => {
-  const response = await api.put(`/Dispositivos/${device.id}`, device);
+  const response = await api.put(`/Devices/${device.id}`, device);
   return response.data;
 };
 
 export const deleteDevice = async (id: number) => {
-  const response = await api.delete(`/Dispositivos/${id}`);
+  const response = await api.delete(`/Devices/${id}`);
   return response.data;
 };

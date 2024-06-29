@@ -16,8 +16,8 @@ const DevicesPage: React.FC = () => {
   const fetchData = async (page: number, pageSize: number) => {
     try {
       const data = await fetchDevices(page, pageSize);
-      setDevices(data);
-      setTotalItems(data.length);
+      setDevices(data.items);
+      setTotalItems(data.totalItems);
 
     } catch (error) {
       console.error('Error fetching data:', error); // Log de depuração
