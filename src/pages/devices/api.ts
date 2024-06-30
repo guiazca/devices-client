@@ -5,12 +5,6 @@ const api = axios.create({
   baseURL: 'https://localhost:7131/api', // Atualize a URL base para o seu backend
 });
 
-// Funções para Marcas
-export const fetchBrands = async () => {
-  const response = await api.get('/Marcas');
-  return response.data;
-};
-
 // Funções para Modelos
 export const fetchModelsByBrand = async (brandId: number) => {
   const response = await api.get(`/Modelos/${brandId}/modelos`);

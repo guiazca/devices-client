@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Box, TextField, Button, MenuItem } from '@mui/material';
 import { Device, Brand, Model } from './types';
-import { fetchBrands, fetchModelsByBrand } from './api';
 import { fetchLocations } from '../locations/api';
 import { Location } from '../locations/types';
+import { fetchBrands } from '../brand/api';
+import { fetchModelsByBrand } from './api';
 
 interface DeviceModalProps {
   open: boolean;
