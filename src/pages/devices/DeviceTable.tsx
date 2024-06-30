@@ -15,13 +15,19 @@ interface DeviceTableProps {
 
 const DeviceTable: React.FC<DeviceTableProps> = ({ devices, totalItems, page, pageSize, onPageChange, onRowsPerPageChange, onEdit, onDelete }) => {
   console.log('DeviceTable props:', { devices, totalItems, page, pageSize }); // Log de depuração
-
+  const formatUrl = (url: string) => {
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      return `http://${url}`;
+    }
+    return url;
+  };
+  
   return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
+            <TableCell>Marca</TableCell>
             <TableCell>Modelo</TableCell>
             <TableCell>Localização</TableCell>
             <TableCell>Categoria</TableCell>
@@ -36,14 +42,18 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, totalItems, page, pa
         <TableBody>
           {devices.map((device) => (
             <TableRow key={device.id}>
-              <TableCell>{device.id}</TableCell>
+              <TableCell>{device.marcaNome}</TableCell>
               <TableCell>{device.modeloNome}</TableCell>
               <TableCell>{device.localizacaoNome}</TableCell>
               <TableCell>{device.categoriaNome}</TableCell>
               <TableCell>{device.macAddress}</TableCell>
               <TableCell>{device.ip}</TableCell>
               <TableCell>{device.porta}</TableCell>
-              <TableCell>{device.url}</TableCell>
+              <TableCell>
+              <a href={formatUrl(device?.url!)} target="_blank" rel="noopener noreferrer">
+                  {device.url}
+                </a>
+              </TableCell>
               <TableCell>
                 <span style={{ color: device.isOnline ? 'green' : 'red' }}>
                   &#x25CF; {/* Círculo verde ou vermelho */}
