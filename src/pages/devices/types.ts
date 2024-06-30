@@ -28,5 +28,7 @@ export interface Brand {
     ip: string;
     porta?: number;
     url?: string;
+    categoriaId: number;
+    categoriaNome: string;
   }
   
