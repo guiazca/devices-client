@@ -15,6 +15,13 @@ interface DeviceTableProps {
 
 const DeviceTable: React.FC<DeviceTableProps> = ({ devices, totalItems, page, pageSize, onPageChange, onRowsPerPageChange, onEdit, onDelete }) => {
   console.log('DeviceTable props:', { devices, totalItems, page, pageSize }); // Log de depuração
+  const formatUrl = (url: string) => {
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      return `http://${url}`;
+    }
+    return url;
+  };
+  
 
   return (
     <TableContainer component={Paper}>
@@ -34,13 +41,16 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, totalItems, page, pa
         <TableBody>
           {devices.map((device) => (
             <TableRow key={device.id}>
-              <TableCell>{device.id}</TableCell>
               <TableCell>{device.modeloNome}</TableCell>
               <TableCell>{device.localizacaoNome}</TableCell>
               <TableCell>{device.categoriaNome}</TableCell>  {/* Adiciona Categoria */}
               <TableCell>{device.ip}</TableCell>
               <TableCell>{device.porta}</TableCell>
-              <TableCell>{device.url}</TableCell>
+              <TableCell>
+              <a href={formatUrl(device?.url!)} target="_blank" rel="noopener noreferrer">
+                  {device.url}
+                </a>
+              </TableCell>
               <TableCell>
                 <Button variant="contained" color="primary" onClick={() => onEdit(device)}>Editar</Button>
                 <Button variant="contained" color="secondary" onClick={() => onDelete(device.id!)}>Deletar</Button>
