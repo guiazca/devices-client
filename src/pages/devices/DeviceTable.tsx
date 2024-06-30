@@ -28,7 +28,7 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, totalItems, page, pa
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
+            <TableCell>Marca</TableCell>
             <TableCell>Modelo</TableCell>
             <TableCell>Localização</TableCell>
             <TableCell>Categoria</TableCell>  {/* Adiciona Categoria */}
@@ -41,6 +41,7 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, totalItems, page, pa
         <TableBody>
           {devices.map((device) => (
             <TableRow key={device.id}>
+              <TableCell>{device.marcaNome}</TableCell>
               <TableCell>{device.modeloNome}</TableCell>
               <TableCell>{device.localizacaoNome}</TableCell>
               <TableCell>{device.categoriaNome}</TableCell>  {/* Adiciona Categoria */}
