@@ -25,6 +25,7 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, totalItems, page, pa
             <TableCell>Modelo</TableCell>
             <TableCell>Localização</TableCell>
             <TableCell>Categoria</TableCell>
+            <TableCell>Mac Address</TableCell>
             <TableCell>IP</TableCell>
             <TableCell>Porta</TableCell>
             <TableCell>URL</TableCell>
@@ -39,6 +40,7 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, totalItems, page, pa
               <TableCell>{device.modeloNome}</TableCell>
               <TableCell>{device.localizacaoNome}</TableCell>
               <TableCell>{device.categoriaNome}</TableCell>
+              <TableCell>{device.macAddress}</TableCell>
               <TableCell>{device.ip}</TableCell>
               <TableCell>{device.porta}</TableCell>
               <TableCell>{device.url}</TableCell>
