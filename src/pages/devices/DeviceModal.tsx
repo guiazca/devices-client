@@ -28,6 +28,7 @@ const DeviceModal: React.FC<DeviceModalProps> = ({ open, onClose, onSave, device
     nome: '',
     modeloNome: '',
     marcaNome: '',
+    macAddress: '',
   });
   const [brands, setBrands] = useState<Brand[]>([]);
   const [models, setModels] = useState<Model[]>([]);
@@ -68,6 +69,7 @@ const DeviceModal: React.FC<DeviceModalProps> = ({ open, onClose, onSave, device
         nome: '',
         modeloNome: '',
         marcaNome: '',
+        macAddress: '',
       });
     }
   }, [device]);
@@ -160,6 +162,7 @@ const DeviceModal: React.FC<DeviceModalProps> = ({ open, onClose, onSave, device
             </MenuItem>
           ))}
         </TextField>
+        <TextField fullWidth label="macAdress" name="macAddress" value={formData.macAddress} onChange={handleChange} margin="normal" />
         <TextField fullWidth label="IP" name="ip" value={formData.ip} onChange={handleChange} margin="normal" />
         <TextField fullWidth label="Porta" name="porta" value={formData.porta || ''} onChange={handleChange} margin="normal" />
         <TextField fullWidth label="URL" name="url" value={formData.url} onChange={handleChange} margin="normal" />

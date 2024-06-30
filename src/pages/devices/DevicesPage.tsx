@@ -4,10 +4,10 @@ import DeviceTable from './DeviceTable';
 import DeviceModal from './DeviceModal';
 import { fetchDevices, createDevice, updateDevice, deleteDevice } from './api';
 import { fetchLocations } from '../locations/api';
-import { Device, Brand, Location } from './types';
-import { Category } from '../categories/types';
+import { saveAs } from 'file-saver'; // Biblioteca para salvar arquivos
+import { Brand, Device } from './types';
 import { fetchBrands } from '../brand/api';
-import { fetchCategories } from '../categories/api';
+import { Location } from '../locations/types';
 
 const DevicesPage: React.FC = () => {
   const [devices, setDevices] = useState<Device[]>([]);
@@ -18,15 +18,13 @@ const DevicesPage: React.FC = () => {
   const [editingDevice, setEditingDevice] = useState<Device | undefined>(undefined);
   const [brands, setBrands] = useState<Brand[]>([]);
   const [locations, setLocations] = useState<Location[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
   const [selectedBrand, setSelectedBrand] = useState<number | undefined>(undefined);
   const [selectedLocation, setSelectedLocation] = useState<number | undefined>(undefined);
-  const [selectedCategory, setSelectedCategory] = useState<number | undefined>(undefined);
 
-  const fetchData = async (page: number, pageSize: number, marcaId?: number, localizacaoId?: number, categoriaId?: number) => {
+  const fetchData = async (page: number, pageSize: number, marcaId?: number, localizacaoId?: number) => {
     try {
-      console.log('Fetching data...', { page, pageSize, marcaId, localizacaoId, categoriaId }); // Log de depuração
-      const data = await fetchDevices(page, pageSize, marcaId, localizacaoId, categoriaId);
+      console.log('Fetching data...', { page, pageSize, marcaId, localizacaoId }); // Log de depuração
+      const data = await fetchDevices(page, pageSize, marcaId, localizacaoId);
       console.log('Data fetched:', data); // Log de depuração
       setDevices(data.items);
       setTotalItems(data.totalItems);
@@ -37,17 +35,15 @@ const DevicesPage: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchData(page, pageSize, selectedBrand, selectedLocation, selectedCategory);
-  }, [page, pageSize, selectedBrand, selectedLocation, selectedCategory]);
+    fetchData(page, pageSize, selectedBrand, selectedLocation);
+  }, [page, pageSize, selectedBrand, selectedLocation]);
 
   useEffect(() => {
     const fetchFilterData = async () => {
       const brandsData = await fetchBrands();
       const locationsData = await fetchLocations();
-      const categoriesData = await fetchCategories();
       setBrands(brandsData);
       setLocations(locationsData);
-      setCategories(categoriesData);
     };
 
     fetchFilterData();
@@ -60,7 +56,7 @@ const DevicesPage: React.FC = () => {
 
   const handleCloseModal = () => {
     setModalOpen(false);
-    fetchData(page, pageSize, selectedBrand, selectedLocation, selectedCategory); // Atualiza a lista ao fechar o modal
+    fetchData(page, pageSize, selectedBrand, selectedLocation); // Atualiza a lista ao fechar o modal
   };
 
   const handleSaveDevice = async (device: Device) => {
@@ -70,7 +66,7 @@ const DevicesPage: React.FC = () => {
       } else {
         await createDevice(device);
       }
-      fetchData(page, pageSize, selectedBrand, selectedLocation, selectedCategory); // Atualiza a lista após salvar
+      fetchData(page, pageSize, selectedBrand, selectedLocation); // Atualiza a lista após salvar
       handleCloseModal(); // Fecha o modal após salvar
     } catch (error) {
       console.error('Error saving device:', error); // Log de depuração
@@ -85,7 +81,7 @@ const DevicesPage: React.FC = () => {
   const handleDeleteDevice = async (id: number) => {
     try {
       await deleteDevice(id);
-      fetchData(page, pageSize, selectedBrand, selectedLocation, selectedCategory); // Atualiza a lista após deletar
+      fetchData(page, pageSize, selectedBrand, selectedLocation); // Atualiza a lista após deletar
     } catch (error) {
       console.error('Error deleting device:', error); // Log de depuração
     }
@@ -112,10 +108,14 @@ const DevicesPage: React.FC = () => {
     console.log('Location changed:', event.target.value); // Log de depuração
   };
 
-  const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedCategory(event.target.value === '' ? undefined : parseInt(event.target.value, 10));
-    setPage(1); // Reset to the first page
-    console.log('Category changed:', event.target.value); // Log de depuração
+  const exportData = async () => {
+    try {
+      const response = await fetch('https://localhost:7131/api/Dispositivos/export');
+      const blob = await response.blob();
+      saveAs(blob, `dispositivos_${new Date().toISOString()}.csv`);
+    } catch (error) {
+      console.error('Error exporting data:', error);
+    }
   };
 
   return (
@@ -153,24 +153,11 @@ const DevicesPage: React.FC = () => {
             </MenuItem>
           ))}
         </TextField>
-        <TextField
-          select
-          label="Categoria"
-          value={selectedCategory || ''}
-          onChange={handleCategoryChange}
-          sx={{ marginRight: 2, minWidth: 120 }}
-        >
-          <MenuItem value="">
-            <em>All</em>
-          </MenuItem>
-          {categories.map((category) => (
-            <MenuItem key={category.id} value={category.id}>
-              {category.nome}
-            </MenuItem>
-          ))}
-        </TextField>
         <Button variant="contained" color="primary" onClick={handleOpenModal}>
           Cadastrar Dispositivo
+        </Button>
+        <Button variant="contained" color="secondary" onClick={exportData}>
+          Exportar CSV
         </Button>
       </Box>
       <DeviceTable 

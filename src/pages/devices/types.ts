@@ -30,5 +30,6 @@ export interface Brand {
     url?: string;
     categoriaId: number;
     categoriaNome: string;
+    isOnline?: boolean;
   }
   
